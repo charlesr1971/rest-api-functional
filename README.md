@@ -1,6 +1,6 @@
 # REACT ES6 REST API #
 
-**React Type:** Class Component
+**React Type:** Functional Component
 
 ## Introduction ##
 
