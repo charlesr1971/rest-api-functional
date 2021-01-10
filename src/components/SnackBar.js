@@ -24,14 +24,11 @@ const SnackBar = (props) => {
   const handleClickActionSnackbar = () => {
     setIsSnackbarActive(false);
   }
-  const isSnackbarActive  = isSnackbarActive;
-  const snackbarTimeout = snackbarTimeout;
-  const snackbarMessage = snackbarMessage;
   return (
     <Snackbar
       active={isSnackbarActive}
-      onClick={this.handleClickActionSnackbar}
-      onTimeout={this.handleTimeoutSnackbar} 
+      onClick={handleClickActionSnackbar}
+      onTimeout={handleTimeoutSnackbar} 
       timeout={snackbarTimeout}
       action="Close">{snackbarMessage}</Snackbar>
   );

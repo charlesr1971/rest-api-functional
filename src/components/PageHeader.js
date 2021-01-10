@@ -36,11 +36,13 @@ const PageHeader = (props) => {
   const [isSnackbarActive, setIsSnackbarActive] = useState(false);
   const [snackbarTimeout, setSnackbarTimeout] = useState(5000);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  //readPost(page,"","",sortmethod,sortby,postbatch,"");
   if(props.global_consoleDebug){
     console.log("PageHeader: constructor(): props: ", props);
   }
   useEffect(() => {
     readPost(page,"","",sortmethod,sortby,postbatch,"");
+    setDataFetched(true);
   }, []);
   useEffect(() => {
     const mdlLayoutDrawerButton = document.querySelector(".mdl-layout__drawer-button");
@@ -92,8 +94,6 @@ const PageHeader = (props) => {
   // CRUD
   // Post: CREATE
   const createPost = (title,content) => {
-    title = (arguments[0] !== null) ? arguments[0] : "";
-    content = (arguments[1] !== null) ? arguments[1] : "";
     const path = "/post/0";
     const url = restapiEndpoint + "/post/0/" + enableprofanityfilter;
     fetch(url,{
@@ -146,13 +146,6 @@ const PageHeader = (props) => {
   }
   // Post: READ
   const readPost = (page,origin,json,sortmethod,sortby,postbatch,error) => {
-    page = (arguments[0] !== null) ? arguments[0] : 1;
-    origin = (arguments[1] !== null) ? arguments[1] : "";
-    json = (arguments[2] !== null) ? arguments[2] : "";
-    sortmethod = (arguments[3] !== null) ? arguments[3] : sortmethod;
-    sortby = (arguments[4] !== null) ? arguments[4] : sortby;
-    postbatch = (arguments[5] !== null) ? arguments[5] : postbatch;
-    error = (arguments[6] !== null) ? arguments[6] : "";
     if(props.global_consoleDebug){
       console.log('Header: readPost(): postbatch:', postbatch);
     }
@@ -193,7 +186,7 @@ const PageHeader = (props) => {
         setPosts(posts);
         setPages(data['pages']);
         setPage(page);
-        setDataFetched(true);
+        setDataFetched(false);
         setMaxpostpage(data['maxpostpage']);
         setSortmethod(sortmethod);
         setSortby(sortby);
@@ -251,7 +244,6 @@ const PageHeader = (props) => {
   }
   // Post: DELETE
   const deletePost = (postid) => {
-    var postid = (arguments[0] !== null) ? arguments[0] : 0;
     const path = "/post/" + postid;
     const url = restapiEndpoint + "/post/" + postid + "/0";
     fetch(url,{
@@ -447,8 +439,6 @@ const PageHeader = (props) => {
     }
   }
   const createSnackBar = (message,type) => {
-    var message = (arguments[0] !== null) ? arguments[0] : "";
-    var type = (arguments[1] !== null) ? arguments[1] : "";
     const id = "snackbar-message";
     let snackbarContainer = document.getElementById(id);
     if(props.global_consoleDebug){
@@ -505,8 +495,6 @@ const PageHeader = (props) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
   const createSlug = (slug,id) => {
-    var slug = (arguments[0] !== null) ? arguments[0] : "";
-    var id = (arguments[1] !== null) ? arguments[1] : parseInt(posts.length + 1);
     let value = "";
     const punctuationPattern = /[.,\/#!$%\^&\*;:{}=\-_`~()]/gim;
     value = slug.replace(punctuationPattern, "");
@@ -544,11 +532,6 @@ const PageHeader = (props) => {
     }
   }
   const handleSelectChange = (page,origin,json,sortmethod,sortby,event) => {
-    var page = (arguments[0] !== null) ? arguments[0] : 1;
-    var origin = (arguments[1] !== null) ? arguments[1] : "";
-    var json = (arguments[2] !== null) ? arguments[2] : "";
-    var sortmethod = (arguments[3] !== null) ? arguments[3] : sortmethod;
-    var sortby = (arguments[4] !== null) ? arguments[4] : sortby;
     if(props.global_consoleDebug){
       console.log('Header: handleSelectChange():  page: ',page,' origin: ',origin,' json: ',json,' sortmethod: ',sortmethod,' sortby: ',sortby,' postbatch: ',event.target.value);
     }
@@ -575,9 +558,6 @@ const PageHeader = (props) => {
     setPostCount(n);
   }
   const removeTodo = (index,origin,postid) => {
-    var index = (arguments[0] !== null) ? arguments[0] : 0;
-    var origin = (arguments[1] !== null) ? arguments[1] : "";
-    var postid = (arguments[2] !== null) ? arguments[2] : 0;
     if(props.global_consoleDebug){
       console.log("Header: removeTodo(): index: ",index," origin: ",origin," postid: ",postid);
     }
@@ -591,8 +571,8 @@ const PageHeader = (props) => {
     }
   }
   const markTodoDone = (index) => {
-    const todos = posts;
-    const todo = posts[index];
+    let todos = posts;
+    let todo = posts[index];
     todos.splice(index, 1);
     todo.done = !todo.done;
     todo.done ? todos.push(todo) : todos.unshift(todo);
@@ -611,7 +591,7 @@ const PageHeader = (props) => {
       console.log("Header: toggleEnableprofanityfilter(): enableprofanityfilter: ",enableprofanityfilter);
     }
   }
-  var posts = posts.map(
+  var _posts = posts.map(
     function (post, index) {
       const link = "/post/" + post.slug;
       return (
@@ -637,7 +617,7 @@ const PageHeader = (props) => {
           <NavLink className="mdl-navigation__link" to="/">
             Home
           </NavLink>
-          {posts}
+          {_posts}
         </Navigation>
       </Drawer>
       <Content>

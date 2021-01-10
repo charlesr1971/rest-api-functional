@@ -23,7 +23,7 @@ const ToDoList = (props) => {
   const [addToDo, setAddToDo] = useState(false);
   const [pages, setPages] = useState(props.pages);
   const [page, setPage] = useState(props.page);
-  const [enableprofanityfilter, setEnableprofanityfilter] = useState(props.global_enableProfanityFilter);
+  const [enableProfanityFilter, setEnableProfanityFilter] = useState(props.global_enableProfanityFilter);
   if(props.global_consoleDebug){
     console.log("ToDoList: constructor(): props: ", props);
   }
@@ -292,16 +292,16 @@ const ToDoList = (props) => {
   if(props.global_consoleDebug){
     console.log('ToDoList: render(): pages:', pages,' props.inputValue: ',props.inputValue,' props.contentValue: ',props.contentValue);
   }
-  let pages = []; 
+  let _pages = []; 
   for (var i = 1; i <= pages; i++) {
-    pages.push(i);
+    _pages.push(i);
   }
-  let pagination = pages.map(
+  let pagination = _pages.map(
     function (page, index) {
       return (
         <Pagination 
           ordinal={page} 
-          readPost={props.readPost(page,props.origin,"",props.sortmethod,props.sortby,props.postbatch,"")} 
+          readPost={props.readPost.bind(this,page,props.origin,"",props.sortmethod,props.sortby,props.postbatch,"")} 
           page={props.page} 
           pages={props.pages} 
           maxpostpage={props.maxpostpage} 
@@ -313,14 +313,14 @@ const ToDoList = (props) => {
           key={index}
         />
       );
-    }
+    }.bind(this)
   );
-  let prev = pages.map(
+  let prev = _pages.map(
     function (page, index) {
       const defaultStyle = props.page === 1 ? {cursor: "default", color: "rgba(0,0,0,0.05)"} : {cursor: "pointer", color: "rgba(0,0,0,0.5)"};
       let opts = {};
       if(props.page !== 1) {
-        opts['onClick'] = props.readPost(parseInt(props.page - 1),props.origin,"",props.sortmethod,props.sortby,props.postbatch,"");
+        opts['onClick'] = props.readPost.bind(this,parseInt(props.page - 1),props.origin,"",props.sortmethod,props.sortby,props.postbatch,"");
       }
       return (
         page === 1 ? 
@@ -332,14 +332,14 @@ const ToDoList = (props) => {
         ""
         )
       );
-    }
+    }.bind(this)
   );
-  let next = pages.map(
+  let next = _pages.map(
     function (page, index) {
       const defaultStyle = props.page === props.pages ? {cursor: "default", color: "rgba(0,0,0,0.05)"} : {cursor: "pointer", color: "rgba(0,0,0,0.5)"};
       let opts = {};
       if(props.page !== props.pages) {
-        opts['onClick'] = props.readPost(parseInt(props.page + 1),props.origin,"",props.sortmethod,props.sortby,props.postbatch,"");
+        opts['onClick'] = props.readPost.bind(this,parseInt(props.page + 1),props.origin,"",props.sortmethod,props.sortby,props.postbatch,"");
       }
       return (
         page === props.maxpostpage ? 
@@ -351,7 +351,7 @@ const ToDoList = (props) => {
         ""
         )
       );
-    }
+    }.bind(this)
   );
   pagination = (<div className="pagination-container">{prev}{pagination}{next}</div>);
   if(props.global_consoleDebug){
@@ -363,7 +363,7 @@ const ToDoList = (props) => {
     titleSortmethodUpOptsClassName['className'] = "fa fa-arrow-circle-up current";
   }
   let titleSortmethodUpOpts = {};
-  titleSortmethodUpOpts['onClick'] = props.readPost(props.page,props.origin,"","Title","ASC",props.postbatch,"");
+  titleSortmethodUpOpts['onClick'] = props.readPost.bind(this,props.page,props.origin,"","Title","ASC",props.postbatch,"");
   const titleSortmethodUp = (<i {...titleSortmethodUpOptsClassName} {...titleSortmethodUpOpts}></i>);
   let titleSortmethodDownOptsClassName = {};
   titleSortmethodDownOptsClassName['className'] = "fa fa-arrow-circle-down";
@@ -371,7 +371,7 @@ const ToDoList = (props) => {
     titleSortmethodDownOptsClassName['className'] = "fa fa-arrow-circle-down current";
   }
   let titleSortmethodDownOpts = {};
-  titleSortmethodDownOpts['onClick'] = props.readPost(props.page,props.origin,"","Title","DESC",props.postbatch,"");
+  titleSortmethodDownOpts['onClick'] = props.readPost.bind(this,props.page,props.origin,"","Title","DESC",props.postbatch,"");
   const titleSortmethodDown = (<i {...titleSortmethodDownOptsClassName} {...titleSortmethodDownOpts}></i>);
   const titleColumnTitle = (<div className="column-title"><span>Title</span>{titleSortmethodUp}{titleSortmethodDown}</div>);
   let submissiondateSortmethodUpOptsClassName = {};
@@ -380,7 +380,7 @@ const ToDoList = (props) => {
     submissiondateSortmethodUpOptsClassName['className'] = "fa fa-arrow-circle-up current";
   }
   let submissiondateSortmethodUpOpts = {};
-  submissiondateSortmethodUpOpts['onClick'] = props.readPost(props.page,props.origin,"","Submission_date","ASC",props.postbatch,"");
+  submissiondateSortmethodUpOpts['onClick'] = props.readPost.bind(this,props.page,props.origin,"","Submission_date","ASC",props.postbatch,"");
   const submissiondateSortmethodUp = (<i {...submissiondateSortmethodUpOptsClassName} {...submissiondateSortmethodUpOpts}></i>);
   let submissiondateSortmethodDownOptsClassName = {};
   submissiondateSortmethodDownOptsClassName['className'] = "fa fa-arrow-circle-down";
@@ -388,13 +388,13 @@ const ToDoList = (props) => {
     submissiondateSortmethodDownOptsClassName['className'] = "fa fa-arrow-circle-down current";
   }
   let submissiondateSortmethodDownOpts = {};
-  submissiondateSortmethodDownOpts['onClick'] = props.readPost(props.page,props.origin,"","Submission_date","DESC",props.postbatch,"");
+  submissiondateSortmethodDownOpts['onClick'] = props.readPost.bind(this,props.page,props.origin,"","Submission_date","DESC",props.postbatch,"");
   const submissiondateSortmethodDown = (<i {...submissiondateSortmethodDownOptsClassName} {...submissiondateSortmethodDownOpts}></i>);
   const submissiondateColumnTitle = (<div className="column-title"><span>Created At</span>{submissiondateSortmethodUp}{submissiondateSortmethodDown}</div>);
   let resetSortmethodSortbyOptsClassName = {};
   resetSortmethodSortbyOptsClassName['className'] = "fa fa-power-off";
   let resetSortmethodSortbyOpts = {};
-  resetSortmethodSortbyOpts['onClick'] = props.readPost(1,props.origin,"","Submission_date","DESC",4,"");
+  resetSortmethodSortbyOpts['onClick'] = props.readPost.bind(this,1,props.origin,"","Submission_date","DESC",4,"");
   const resetSortmethodSortby = (<i {...resetSortmethodSortbyOptsClassName} {...resetSortmethodSortbyOpts}></i>);
   const resetSortmethodSortbyColumnTitle = (<div className="column-title">{resetSortmethodSortby}</div>);
   let postbatch_select = props.postbatch_select.map(
@@ -404,8 +404,8 @@ const ToDoList = (props) => {
       );
     }
   );
-  postbatch_select = (<div className="post-batch-select-column-title"><select className="custom" onChange={props.handleSelectChange(props.page,props.origin,"",props.sortmethod,props.sortby)} value={props.postbatch}>{postbatch_select}</select></div>);
-  const openProfanitylistModal = enableProfanityFilter === 1 ? (<i className="fa fa-file-o" onClick={props.openModal("Profanity List","The profanity list contains highly offensive words. This list is for testing purposes only.","View Profanity List",1)}></i>) : ("") ;
+  postbatch_select = (<div className="post-batch-select-column-title"><select className="custom" onChange={props.handleSelectChange.bind(this,props.page,props.origin,"",props.sortmethod,props.sortby)} value={props.postbatch}>{postbatch_select}</select></div>);
+  const openProfanitylistModal = enableProfanityFilter === 1 ? (<i className="fa fa-file-o" onClick={props.openModal.bind(this,"Profanity List","The profanity list contains highly offensive words. This list is for testing purposes only.","View Profanity List",1)}></i>) : ("") ;
   // loop through list item array and initiate <ToDo /> child components
   let _todos = null;
   if(props.origin === "posts"){
@@ -422,10 +422,10 @@ const ToDoList = (props) => {
           slug={todo.slug} 
           createdAt={todo.createdAt} 
           postid={todo.postid}
-          removeTodo={props.removeTodo(index,"posts",todo.postid)}
-          markTodoDone={props.markTodoDone(index)}
-          moveUp={this.move(index,"up")}
-          moveDown={this.move(index,"down")} 
+          removeTodo={props.removeTodo.bind(this,index,"posts",todo.postid)}
+          markTodoDone={props.markTodoDone.bind(this,index)}
+          moveUp={move(index,"up")}
+          moveDown={move(index,"down")} 
           global_height={props.global_height} 
           global_consoleDebug={props.global_consoleDebug} 
           global_enableProfanityFilter={props.global_enableProfanityFilter} 
@@ -433,7 +433,7 @@ const ToDoList = (props) => {
           global_restapiEndpointSecure={props.global_restapiEndpointSecure}
         />
         );
-      }
+      }.bind(this)
     );
   }
   else{
@@ -452,7 +452,7 @@ const ToDoList = (props) => {
           id1={props.id} 
           id2={todo.id} 
           postid={todo.postid}
-          removeTodo={props.removeTodo(index,"post",todo.postid)} 
+          removeTodo={props.removeTodo.bind(this,index,"post",todo.postid)} 
           global_height={props.global_height} 
           global_consoleDebug={props.global_consoleDebug} 
           global_enableProfanityFilter={props.global_enableProfanityFilter} 
@@ -461,7 +461,7 @@ const ToDoList = (props) => {
           openModal={props.openModal} 
         />
         );
-      }
+      }.bind(this)
     );
   }
   if(!_todos){
@@ -517,7 +517,7 @@ const ToDoList = (props) => {
           <div className="mdl-textfield mdl-js-textfield" style={mdltextfieldStyle}>
             <Textfield 
             value={props.inputValue} 
-            onChange={props.handleChange} 
+            onChange={props.handleChange.bind(this)} 
             placeholder="Post title" 
             label="" 
             />
@@ -525,13 +525,13 @@ const ToDoList = (props) => {
           <div className="mdl-textfield mdl-js-textfield">
             <Textfield 
             value={props.contentValue} 
-            onChange={props.handleContentChange} 
+            onChange={props.handleContentChange.bind(this)} 
             placeholder="Post content" 
             label="" 
             rows="6" 
             />
           </div>
-          <a className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onClick={props.addTodo}>
+          <a className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onClick={props.addTodo.bind(this)}>
             Add Post
           </a>
         </form>
@@ -551,7 +551,7 @@ const ToDoList = (props) => {
         <div style={clearbothStyle}></div>
       </CardActions>
       <CardMenu style={{color: '#fff'}}>
-        <IconButton name="share" onClick={props.openModal("Share","Click below to share","",2)} />
+        <IconButton name="share" onClick={props.openModal.bind(this,"Share","Click below to share","",2)} />
       </CardMenu>
     </Card>
     )

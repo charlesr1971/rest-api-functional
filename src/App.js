@@ -7,38 +7,29 @@ import PageHeader from "./components/PageHeader";
 
 import './App.css';
 
-const global_height = 55;
-const global_consoleDebug = false;
-const global_enableProfanityFilter = 0;
-
-const global_remote = "community";
-
-let global_restapiEndpointInsecure = "";
-let global_restapiEndpointSecure = "";
-
-if(global_remote === "playground"){
-
-  global_restapiEndpointInsecure = document.domain === "localhost" ? "http://localhost:8500/react/react-router-es6/assets/cfm/rest/api/v1/index.cfm" : "http://playground.application.me.uk/react-router-es6/assets/cfm/rest/api/v1/index.cfm";
-  global_restapiEndpointSecure = document.domain === "localhost" ? "http://localhost:8500/react/react-router-es6/assets/cfm/rest/api/v1/index.cfm" : "https://community.establishmindfulness.com/assets-react_es6_restapi/cfm/rest/api/v1/index.cfm";
-
-}
-else{
-
-  global_restapiEndpointInsecure = document.domain === "localhost" ? "http://localhost:8500/react/react-router-es6/assets/cfm/rest/api/v1/index.cfm" : "cfm/rest/api/v1/index.cfm";
-  global_restapiEndpointSecure = document.domain === "localhost" ? "http://localhost:8500/react/react-router-es6/assets/cfm/rest/api/v1/index.cfm" : "https://community.establishmindfulness.com/assets-react_es6_restapi/cfm/rest/api/v1/index.cfm";
-
-}
 
 export const history = createBrowserHistory({
   basename: process.env.PUBLIC_URL
 });
 
 const App = (props) => {
-  const [global_height, setGlobal_height] = useState(global_height);
-  const [global_consoleDebug, setGlobal_consoleDebug] = useState(global_consoleDebug);
-  const [global_enableProfanityFilter, setGlobal_consoleDebug] = useState(global_enableProfanityFilter);
-  const [global_restapiEndpointInsecure, setGlobal_restapiEndpointInsecure] = useState(global_restapiEndpointInsecure);
-  const [global_restapiEndpointSecure, setGlobal_restapiEndpointSecure] = useState(global_restapiEndpointSecure);
+  const _global_remote = "community";
+  let _global_restapiEndpointInsecure = "";
+  let _global_restapiEndpointSecure = "";
+  if(_global_remote === "playground"){
+    _global_restapiEndpointInsecure = document.domain === "localhost" ? "http://localhost:8500/react/react-router-es6/assets/cfm/rest/api/v1/index.cfm" : "http://playground.application.me.uk/react-router-es6/assets/cfm/rest/api/v1/index.cfm";
+    _global_restapiEndpointSecure = document.domain === "localhost" ? "http://localhost:8500/react/react-router-es6/assets/cfm/rest/api/v1/index.cfm" : "https://community.establishmindfulness.com/assets-react_es6_restapi/cfm/rest/api/v1/index.cfm";
+
+  }
+  else{
+    _global_restapiEndpointInsecure = document.domain === "localhost" ? "http://localhost:8500/react/react-router-es6/assets/cfm/rest/api/v1/index.cfm" : "cfm/rest/api/v1/index.cfm";
+    _global_restapiEndpointSecure = document.domain === "localhost" ? "http://localhost:8500/react/react-router-es6/assets/cfm/rest/api/v1/index.cfm" : "https://community.establishmindfulness.com/assets-react_es6_restapi/cfm/rest/api/v1/index.cfm";
+  }
+  const [global_height, setGlobal_height] = useState(55);
+  const [global_consoleDebug, setGlobal_consoleDebug] = useState(false);
+  const [global_enableProfanityFilter, setGlobal_enableProfanityFilter] = useState(0);
+  const [global_restapiEndpointInsecure, setGlobal_restapiEndpointInsecure] = useState(_global_restapiEndpointInsecure);
+  const [global_restapiEndpointSecure, setGlobal_restapiEndpointSecure] = useState(_global_restapiEndpointSecure);
   if(global_consoleDebug){
     console.log("App: constructor(): props: ", props);
   }

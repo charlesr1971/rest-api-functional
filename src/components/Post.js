@@ -34,7 +34,7 @@ const Post = (props) => {
         </div>
       </CardActions>
       <CardMenu style={{color: '#fff'}}>
-        <IconButton name="share" onClick={props.openModal("Share","Click below to share","",2)} />
+        <IconButton name="share" onClick={props.openModal.bind(this,"Share","Click below to share","",2)} />
       </CardMenu>
     </Card>
   );

@@ -8,7 +8,7 @@ const Endpoint = (props) => {
   useEffect(() => {
     window.componentHandler.upgradeDom();
     setTimeout(function(){
-      addClassToRadioSecureInsecure();
+      //addClassToRadioSecureInsecure();
     },0);
   });
   const addClassToRadioSecureInsecure = () => {
@@ -31,14 +31,14 @@ const Endpoint = (props) => {
           <Radio 
           value="secure" 
           ripple 
-          onClick={props.toggleEndpoints("secure")}
+          onClick={props.toggleEndpoints.bind(this,"secure")}
           >
             Secure, slow endpoint
           </Radio>
           <Radio 
           value="insecure" 
           ripple 
-          onClick={props.toggleEndpoints("insecure")}
+          onClick={props.toggleEndpoints.bind(this,"insecure")}
           >
             Insecure, fast endpoint<br />
             <span>This may cause UX issues, depending on which device/browser is being used.</span><br />

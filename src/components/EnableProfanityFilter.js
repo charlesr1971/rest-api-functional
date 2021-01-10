@@ -8,7 +8,7 @@ const EnableProfanityFilter = (props) => {
   useEffect(() => {
     window.componentHandler.upgradeDom();
     setTimeout(function(){
-      addClassToRadioYesNo();
+      //addClassToRadioYesNo();
     },0);
   });
   const addClassToRadioYesNo = () => {
@@ -32,7 +32,7 @@ const EnableProfanityFilter = (props) => {
           id="radio-yes" 
           value="1" 
           ripple 
-          onClick={props.toggleEnableprofanityfilter(1)}
+          onClick={props.toggleEnableprofanityfilter.bind(this,1)}
           >
             Yes
           </Radio>
@@ -40,7 +40,7 @@ const EnableProfanityFilter = (props) => {
           id="radio-no" 
           value="0" 
           ripple 
-          onClick={props.toggleEnableprofanityfilter(0)}
+          onClick={props.toggleEnableprofanityfilter.bind(this,0)}
           >
             No
           </Radio>
