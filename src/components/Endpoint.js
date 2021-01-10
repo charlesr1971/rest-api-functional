@@ -31,14 +31,14 @@ const Endpoint = (props) => {
           <Radio 
           value="secure" 
           ripple 
-          onClick={props.toggleEndpoints.bind(this,"secure")}
+          onClick={props.toggleEndpoints("secure")}
           >
             Secure, slow endpoint
           </Radio>
           <Radio 
           value="insecure" 
           ripple 
-          onClick={props.toggleEndpoints.bind(this,"insecure")}
+          onClick={props.toggleEndpoints("insecure")}
           >
             Insecure, fast endpoint<br />
             <span>This may cause UX issues, depending on which device/browser is being used.</span><br />

@@ -32,7 +32,7 @@ const EnableProfanityFilter = (props) => {
           id="radio-yes" 
           value="1" 
           ripple 
-          onClick={props.toggleEnableprofanityfilter.bind(this,1)}
+          onClick={props.toggleEnableprofanityfilter(1)}
           >
             Yes
           </Radio>
@@ -40,7 +40,7 @@ const EnableProfanityFilter = (props) => {
           id="radio-no" 
           value="0" 
           ripple 
-          onClick={props.toggleEnableprofanityfilter.bind(this,0)}
+          onClick={props.toggleEnableprofanityfilter(0)}
           >
             No
           </Radio>
