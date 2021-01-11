@@ -7,7 +7,7 @@ const NotFound = (props) => {
   }
   useEffect(() => {
     window.componentHandler.upgradeDom();
-  });
+  },[]);
   return (
     <Redirect to="/" />
   )

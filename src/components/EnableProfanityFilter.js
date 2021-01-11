@@ -9,8 +9,8 @@ const EnableProfanityFilter = (props) => {
     window.componentHandler.upgradeDom();
     setTimeout(function(){
       //addClassToRadioYesNo();
-    },0);
-  });
+    },1000);
+  },[]);
   const addClassToRadioYesNo = () => {
     const labelRadioYesNo = props.enableprofanityfilter === 1 ?  document.getElementById("radio-yes").parentElement : document.getElementById("radio-no").parentElement;
     if(props.global_consoleDebug){

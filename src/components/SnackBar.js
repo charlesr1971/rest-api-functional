@@ -17,7 +17,7 @@ const SnackBar = (props) => {
         console.log("SnackBar: componentDidMount(): isSnackbarActive: ",isSnackbarActive," snackbarTimeout: ",snackbarTimeout," snackbarMessage: ",snackbarMessage);
       }
     },1000);
-  });
+  },[]);
   const handleTimeoutSnackbar = () => {
     setIsSnackbarActive(false);
   }

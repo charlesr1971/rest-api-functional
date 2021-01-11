@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Textfield, Button, Spinner, Card, CardText, CardTitle, CardActions, CardMenu, IconButton  } from 'react-mdl';
 import { CSSPlugin, TweenMax, Elastic } from "gsap";
 import { BrowserRouter as Router, Redirect } from "react-router-dom";
@@ -11,6 +11,7 @@ import EnableProfanityFilter from "./EnableProfanityFilter";
 
 const ToDoList = (props) => {
   const height = props.global_height;
+  //const todos = props.posts;
   const [todos, setTodos] = useState(props.posts);
   const [inputValue, setInputValue] = useState(props.inputValue);
   const [contentValue, setContentValue] = useState("");
@@ -27,50 +28,28 @@ const ToDoList = (props) => {
   if(props.global_consoleDebug){
     console.log("ToDoList: constructor(): props: ", props);
   }
+  /* useEffect(() => {
+    //if(props.posts.length > 0 && todos.length == 0){
+      setTimeout(function(){
+        setTodos(props.posts);
+        //if(props.global_consoleDebug){
+          console.log("ToDoList: useEffect(): todos: ", todos);
+        //}
+      },1000);
+    //}
+  },[]); */
+
   useEffect(() => {
-    if (reorderClicked) {
-      movementMatrix.map((child, index) => {
-      const domNode = document.getElementById("callout-" + child["index"]);
-      // START CREDITS
-      // Author: Joshua Comeau
-      // Link: https://medium.com/developers-writing/animating-the-unanimatable-1346a5aab3cd
-      /* 
-          
-        Notes: 
-        
-        This is where the magic happens that allows us to reorder a list based on its array index. 
-        Ingenious solution, using requestAnimationFrame(). 
-        This type of animation cannot be achieved by using 'react-spring' or CSSTransition
-        
-      */
-      if (domNode) {
-        requestAnimationFrame(() => {
-          domNode.style.transform = `translateY(${child.top}px)`;
-          domNode.style.transition = "transform 0s";
-          requestAnimationFrame(() => {
-            domNode.style.transform = "";
-            domNode.style.transition =
-            "transform 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55)";
-            setReorderClicked(false);
-          });
-        });
-      }
-      // END CREDITS
-      });
-    }
-  });
-  useEffect(() => {
-    window.componentHandler.upgradeDom();
-    window.componentHandler.upgradeAllRegistered();
-    if(props.global_consoleDebug){
-      console.log("ToDoList: componentDidMount()...");
-    }
-    setTimeout(function(){
-      if(props.postCount !== props.postCountPrev){
-        animatePostCountIcon();
-      }
-    },0);
-  });
+    //setTodos(props.posts);
+    //if(props.global_consoleDebug){
+      console.log("ToDoList: useEffect(): props.posts: ", props.posts);
+    //}
+  },[]);
+
+  /* useEffect(() => {
+    setTodos(props.posts);
+  },[todos]); */
+  
   const animatePostCountIcon = () => {
     const overshoot = 5;
     const period = 0.25;
@@ -415,7 +394,6 @@ const ToDoList = (props) => {
         <ToDo 
           key={index} 
           keyRef={index} 
-          ref={index} 
           title={todo.title} 
           content={todo.content} 
           done={todo.done} 
@@ -424,8 +402,8 @@ const ToDoList = (props) => {
           postid={todo.postid}
           removeTodo={props.removeTodo.bind(this,index,"posts",todo.postid)}
           markTodoDone={props.markTodoDone.bind(this,index)}
-          moveUp={move(index,"up")}
-          moveDown={move(index,"down")} 
+          moveUp={move.bind(this,index,"up")}
+          moveDown={move.bind(this,index,"down")} 
           global_height={props.global_height} 
           global_consoleDebug={props.global_consoleDebug} 
           global_enableProfanityFilter={props.global_enableProfanityFilter} 
@@ -464,6 +442,9 @@ const ToDoList = (props) => {
       }.bind(this)
     );
   }
+  //if(props.global_consoleDebug){
+    //console.log("ToDoList: constructor(): _todos: ", _todos);
+  //}
   if(!_todos){
     _todos = (<div className="spinner-container"><div className="spinner-container-inner"><Spinner singleColor /></div></div>)
   }

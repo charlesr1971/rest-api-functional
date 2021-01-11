@@ -7,7 +7,7 @@ const Post = (props) => {
   }
   useEffect(() => {
     window.componentHandler.upgradeDom();
-  });
+  },[]);
   const display = props.id1 === props.id2 ? "block" : "none";
   const defaultStyle1 = {
     display: display

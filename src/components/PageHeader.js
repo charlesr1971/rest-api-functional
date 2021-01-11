@@ -42,9 +42,9 @@ const PageHeader = (props) => {
   }
   useEffect(() => {
     readPost(page,"","",sortmethod,sortby,postbatch,"");
-    setDataFetched(true);
+    //setDataFetched(true);
   }, []);
-  useEffect(() => {
+  /* useEffect(() => {
     const mdlLayoutDrawerButton = document.querySelector(".mdl-layout__drawer-button");
     if(mdlLayoutDrawerButton){
       if(props.global_consoleDebug){
@@ -67,10 +67,10 @@ const PageHeader = (props) => {
       catch(e){
       }
     }
-  });
-  useEffect(() => {
+  }); */
+  /* useEffect(() => {
     setPostCountPrev(postCount);
-  });
+  }); */
   // CRUD
   // Pages: READ
   const readPages = () => {
@@ -158,10 +158,10 @@ const PageHeader = (props) => {
     })
     .then(response => response.json())
     .then(data => {
-      if(props.global_consoleDebug){
+      //if(props.global_consoleDebug){
         console.log('Header: readPost(): Success: data:', data);
-      }
-      let posts = [];
+      //}
+      let _posts = [];
       if(data['posts'].length > 0){
         for (var i = 0; i < data['posts'].length; i++) {
           const id = parseInt(i + 1);
@@ -179,14 +179,14 @@ const PageHeader = (props) => {
             createdAt: createdAt,
             postid: obj1['postid']
           }	
-          posts.push(obj2);	  
+          _posts.push(obj2);	  
         } 
         count(data['recordcount']);
 
-        setPosts(posts);
+        setPosts(_posts);
         setPages(data['pages']);
         setPage(page);
-        setDataFetched(false);
+        //setDataFetched(false);
         setMaxpostpage(data['maxpostpage']);
         setSortmethod(sortmethod);
         setSortby(sortby);
@@ -197,7 +197,16 @@ const PageHeader = (props) => {
         setIsSnackbarActive(error ? (error !== "" ? true : false) : false);
         setSnackbarTimeout(snackbarTimeout);
         setSnackbarMessage(error ? (error !== "" ? error : "") : false);
-        toggleEndpoints(restapiEndpointType);
+
+        setDataFetched(true);
+
+
+
+        //toggleEndpoints(restapiEndpointType);
+
+        //buildPosts(posts);
+
+
         if(json !== ""){
           const restapiContainerTextInner = document.getElementById("restapi-container-text-inner");
           if(restapiContainerTextInner){
@@ -591,7 +600,7 @@ const PageHeader = (props) => {
       console.log("Header: toggleEnableprofanityfilter(): enableprofanityfilter: ",enableprofanityfilter);
     }
   }
-  var _posts = posts.map(
+  const _posts = posts.map(
     function (post, index) {
       const link = "/post/" + post.slug;
       return (

@@ -9,8 +9,8 @@ const Endpoint = (props) => {
     window.componentHandler.upgradeDom();
     setTimeout(function(){
       //addClassToRadioSecureInsecure();
-    },0);
-  });
+    },1000);
+  },[]);
   const addClassToRadioSecureInsecure = () => {
     const radioSecureInsecure = props.restapiEndpointType === "secure" ?  document.getElementById("radio-secure").parentElement : document.getElementById("radio-insecure").parentElement;
     if(props.global_consoleDebug){

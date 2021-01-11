@@ -33,9 +33,6 @@ const App = (props) => {
   if(global_consoleDebug){
     console.log("App: constructor(): props: ", props);
   }
-  useEffect(() => {
-    window.componentHandler.upgradeDom();
-  });
   return (
     <Router history={history}>
       <div className="App">

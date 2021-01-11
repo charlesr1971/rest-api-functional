@@ -10,7 +10,7 @@ const ToDo = (props) => {
   }
   useEffect(() => {
     window.componentHandler.upgradeDom();
-  });
+  },[]);
   let defaultClass = "callout display-enter-active";
   defaultClass += props.done ? " callout-success" : " callout-info";
   const id1 = "callout-" + props.keyRef;
