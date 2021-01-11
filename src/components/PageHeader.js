@@ -132,11 +132,9 @@ const PageHeader = (props) => {
           _posts.push(obj2);	  
         } 
         count(data['recordcount']);
-
         setPosts(_posts);
         setPages(data['pages']);
         setPage(page);
-        //setDataFetched(false);
         setMaxpostpage(data['maxpostpage']);
         setSortmethod(sortmethod);
         setSortby(sortby);
@@ -147,16 +145,7 @@ const PageHeader = (props) => {
         setIsSnackbarActive(error ? (error !== "" ? true : false) : false);
         setSnackbarTimeout(snackbarTimeout);
         setSnackbarMessage(error ? (error !== "" ? error : "") : false);
-
         setDataFetched(true);
-
-
-
-        //toggleEndpoints(restapiEndpointType);
-
-        //buildPosts(posts);
-
-
         if(json !== ""){
           const restapiContainerTextInner = document.getElementById("restapi-container-text-inner");
           if(restapiContainerTextInner){
@@ -511,7 +500,6 @@ const PageHeader = (props) => {
       );
     }
   );
-  //dataFetched = false;
   const headerLink = (<Link to="/"><i className="fa fa-home home"></i></Link>);
   const headerA = (<a className="bitbucket-link" href="https://bitbucket.org/charlesrobertson/react-router-es6/src/master/" target="_blank" rel="noreferrer"><i className="fa fa-github"></i></a>);
   const headerSpan = (<span className="mdl-layout-title">Postman REST API</span>);
