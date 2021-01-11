@@ -54,6 +54,10 @@ The CDN version of this project, used the following React files:
     -- ToDo
     -- ToDoList
 
+## Class Components Repo ##    
+
+https://bitbucket.org/charlesrobertson/react-router-es6/src/master/    
+
 ## Remote Build ##
 
 https://community.establishmindfulness.com/assets-react_es6_restapi/index.html
