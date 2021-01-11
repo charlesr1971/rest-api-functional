@@ -54,7 +54,7 @@ The CDN version of this project, used the following React files:
     -- ToDo
     -- ToDoList
 
-## Class Components Repo ##    
+## Class Components Repo ##
 
 https://bitbucket.org/charlesrobertson/react-router-es6/src/master/    
 
