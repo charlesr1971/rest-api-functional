@@ -26,7 +26,7 @@ const Endpoint = (props) => {
     console.log("Endpoint: render(): restapiEndpointType: ",restapiEndpointType);
   }
   return (
-    <p className="radio-container">
+    <div className="radio-container">
       <RadioGroup name="radio-secure-insecure" value={props.restapiEndpointType}>
           <Radio 
           value="secure" 
@@ -45,7 +45,7 @@ const Endpoint = (props) => {
             <span><strong>codepen.io does not allow connections to insecure resources</strong></span>
           </Radio>
       </RadioGroup>
-    </p>
+    </div>
   )
 }
 

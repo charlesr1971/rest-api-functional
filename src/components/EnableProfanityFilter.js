@@ -8,7 +8,7 @@ const EnableProfanityFilter = (props) => {
   useEffect(() => {
     window.componentHandler.upgradeDom();
     setTimeout(function(){
-      //addClassToRadioYesNo();
+      addClassToRadioYesNo();
     },1000);
   },[]);
   const addClassToRadioYesNo = () => {
@@ -26,7 +26,7 @@ const EnableProfanityFilter = (props) => {
     console.log("EnableProfanityFilter: render(): enableprofanityfilter: ",enableprofanityfilter);
   }
   return (
-    <p className="radio-container">
+    <div className="radio-container">
       <RadioGroup name="radio-yes-no" value={enableprofanityfilter}>
           <Radio 
           id="radio-yes" 
@@ -45,7 +45,7 @@ const EnableProfanityFilter = (props) => {
             No
           </Radio>
       </RadioGroup>
-    </p>
+    </div>
   )
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { createBrowserHistory } from 'history';
 import { BrowserRouter as Router} from "react-router-dom";
 //import React, { useState } from "react";
@@ -25,11 +25,11 @@ const App = (props) => {
     _global_restapiEndpointInsecure = document.domain === "localhost" ? "http://localhost:8500/react/react-router-es6/assets/cfm/rest/api/v1/index.cfm" : "cfm/rest/api/v1/index.cfm";
     _global_restapiEndpointSecure = document.domain === "localhost" ? "http://localhost:8500/react/react-router-es6/assets/cfm/rest/api/v1/index.cfm" : "https://community.establishmindfulness.com/assets-react_es6_restapi/cfm/rest/api/v1/index.cfm";
   }
-  const [global_height, setGlobal_height] = useState(55);
-  const [global_consoleDebug, setGlobal_consoleDebug] = useState(false);
-  const [global_enableProfanityFilter, setGlobal_enableProfanityFilter] = useState(0);
-  const [global_restapiEndpointInsecure, setGlobal_restapiEndpointInsecure] = useState(_global_restapiEndpointInsecure);
-  const [global_restapiEndpointSecure, setGlobal_restapiEndpointSecure] = useState(_global_restapiEndpointSecure);
+  const global_height = 55;
+  const global_consoleDebug = false;
+  const global_enableProfanityFilter = 0;
+  const global_restapiEndpointInsecure = _global_restapiEndpointInsecure;
+  const global_restapiEndpointSecure = _global_restapiEndpointSecure;
   if(global_consoleDebug){
     console.log("App: constructor(): props: ", props);
   }

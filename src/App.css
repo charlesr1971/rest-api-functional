@@ -315,7 +315,7 @@ i.app-enableprofanityfilter {
   overflow: visible;
 }
 
-p.radio-container {
+div.radio-container {
   margin: 16px 0px 16px;
 }
 
@@ -327,7 +327,7 @@ p.radio-container {
   white-space: nowrap;
 }
 
-.demo-card-wide p.radio-container label.mdl-radio {
+.demo-card-wide div.radio-container label.mdl-radio {
   position: relative !important;
   top: auto !important; 
   left: auto !important;
@@ -339,21 +339,21 @@ p.radio-container {
   vertical-align: top;
 }
 
-.demo-card-wide p.radio-container label.mdl-radio:nth-of-type(1) {
+.demo-card-wide div.radio-container label.mdl-radio:nth-of-type(1) {
   width: 220px !important;
 }
 
-.demo-card-wide p.radio-container label.mdl-radio:nth-of-type(2) {
+.demo-card-wide div.radio-container label.mdl-radio:nth-of-type(2) {
   width: 500px !important;
 }
 
-.demo-card-wide p.radio-container label.mdl-radio span.mdl-radio__label {
+.demo-card-wide div.radio-container label.mdl-radio span.mdl-radio__label {
   display: block;
   white-space: normal;
   line-height: 24px;
 }
 
-.demo-card-wide p.radio-container label.mdl-radio span.mdl-radio__label span {
+.demo-card-wide div.radio-container label.mdl-radio span.mdl-radio__label span {
   color: rgba(0,0,0,0.35) !important;
 }
 
@@ -767,13 +767,13 @@ dialog + .backdrop {
     white-space: nowrap;
   }
   
-  .demo-card-wide p.radio-container label.mdl-radio:nth-of-type(1) {
+  .demo-card-wide div.radio-container label.mdl-radio:nth-of-type(1) {
     display: block;
     width: auto !important;
     margin-bottom: 15px;
   }
   
-  .demo-card-wide p.radio-container label.mdl-radio:nth-of-type(2) {
+  .demo-card-wide div.radio-container label.mdl-radio:nth-of-type(2) {
     display: block;
     width: auto !important;
   }

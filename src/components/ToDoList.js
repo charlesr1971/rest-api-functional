@@ -10,6 +10,7 @@ import Endpoint from "./Endpoint";
 import EnableProfanityFilter from "./EnableProfanityFilter";
 
 const ToDoList = (props) => {
+  const ref1 = useRef(null);
   const height = props.global_height;
   //const todos = props.posts;
   const [todos, setTodos] = useState(props.posts);
@@ -28,28 +29,55 @@ const ToDoList = (props) => {
   if(props.global_consoleDebug){
     console.log("ToDoList: constructor(): props: ", props);
   }
-  /* useEffect(() => {
-    //if(props.posts.length > 0 && todos.length == 0){
-      setTimeout(function(){
-        setTodos(props.posts);
-        //if(props.global_consoleDebug){
-          console.log("ToDoList: useEffect(): todos: ", todos);
-        //}
-      },1000);
-    //}
-  },[]); */
-
   useEffect(() => {
-    //setTodos(props.posts);
-    //if(props.global_consoleDebug){
+    if(props.global_consoleDebug){
       console.log("ToDoList: useEffect(): props.posts: ", props.posts);
-    //}
+    }
   },[]);
-
-  /* useEffect(() => {
-    setTodos(props.posts);
-  },[todos]); */
-  
+  useEffect(() => {
+    if (reorderClicked) {
+      movementMatrix.map((child, index) => {
+      const domNode = document.getElementById("callout-" + child["index"]);
+      // START CREDITS
+      // Author: Joshua Comeau
+      // Link: https://medium.com/developers-writing/animating-the-unanimatable-1346a5aab3cd
+      /* 
+          
+        Notes: 
+        
+        This is where the magic happens that allows us to reorder a list based on its array index. 
+        Ingenious solution, using requestAnimationFrame(). 
+        This type of animation cannot be achieved by using 'react-spring' or CSSTransition
+        
+      */
+      if (domNode) {
+        requestAnimationFrame(() => {
+          domNode.style.transform = `translateY(${child.top}px)`;
+          domNode.style.transition = "transform 0s";
+          requestAnimationFrame(() => {
+            domNode.style.transform = "";
+            domNode.style.transition =
+            "transform 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55)";
+            setReorderClicked(false);
+          });
+        });
+      }
+      // END CREDITS
+      });
+    }
+  });
+  useEffect(() => {
+    window.componentHandler.upgradeDom();
+    window.componentHandler.upgradeAllRegistered();
+    if(props.global_consoleDebug){
+      console.log("ToDoList: componentDidMount()...");
+    }
+    setTimeout(function(){
+      if(props.postCount !== props.postCountPrev){
+        animatePostCountIcon();
+      }
+    },0);
+  });
   const animatePostCountIcon = () => {
     const overshoot = 5;
     const period = 0.25;
@@ -63,9 +91,6 @@ const ToDoList = (props) => {
       onComplete:function(){
             TweenMax.to(postCountIcon,1.4,{
             scale:1,
-            /* ease:Elastic.easeOut,
-            easeParams:[overshoot,period] */
-            //Elastic.easeOut.config(overshoot,period)
             ease:Elastic.easeOut.config(overshoot,period)
           })
         }
@@ -261,7 +286,6 @@ const ToDoList = (props) => {
     );
     reorder(allMoveUp, allMoveDown, index1, index2, direction);
   }
-  
   if(props.global_consoleDebug){
     console.log('ToDoList: render(): props.postCount:', props.postCount,' props.postCountPrev: ',props.postCountPrev);
   }
@@ -421,7 +445,6 @@ const ToDoList = (props) => {
         <Post 
           key={index} 
           keyRef={index} 
-          ref={index} 
           title={todo.title} 
           done={todo.done} 
           slug={todo.slug} 
@@ -442,11 +465,11 @@ const ToDoList = (props) => {
       }.bind(this)
     );
   }
-  //if(props.global_consoleDebug){
+  if(props.global_consoleDebug){
     //console.log("ToDoList: constructor(): _todos: ", _todos);
-  //}
+  }
   if(!_todos){
-    _todos = (<div className="spinner-container"><div className="spinner-container-inner"><Spinner singleColor /></div></div>)
+    _todos = (<div className="spinner-container"><div className="spinner-container-inner"><Spinner ref={ref1} singleColor /></div></div>)
   }
   const mdltextfieldStyle = {
     marginBottom: "0px"
@@ -509,7 +532,7 @@ const ToDoList = (props) => {
             onChange={props.handleContentChange.bind(this)} 
             placeholder="Post content" 
             label="" 
-            rows="6" 
+            rows={6} 
             />
           </div>
           <a className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onClick={props.addTodo.bind(this)}>
@@ -546,7 +569,6 @@ const ToDoList = (props) => {
     :
     (<Redirect to="/" />)
   );
-  
 }
 
 export default ToDoList;

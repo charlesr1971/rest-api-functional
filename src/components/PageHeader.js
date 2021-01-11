@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Spinner, Layout, Header, Navigation, Drawer, Content } from 'react-mdl';
 import { format } from "date-fns";
 import { Switch, Route, Link, NavLink } from "react-router-dom";
@@ -9,6 +9,7 @@ import NotFound from "./NotFound";
 import SnackBar from "./SnackBar";
 
 const PageHeader = (props) => {
+  const ref1 = useRef(null);
   const [posts, setPosts] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [contentValue, setContentValue] = useState("");
@@ -36,13 +37,11 @@ const PageHeader = (props) => {
   const [isSnackbarActive, setIsSnackbarActive] = useState(false);
   const [snackbarTimeout, setSnackbarTimeout] = useState(5000);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  //readPost(page,"","",sortmethod,sortby,postbatch,"");
   if(props.global_consoleDebug){
     console.log("PageHeader: constructor(): props: ", props);
   }
   useEffect(() => {
     readPost(page,"","",sortmethod,sortby,postbatch,"");
-    //setDataFetched(true);
   }, []);
   /* useEffect(() => {
     const mdlLayoutDrawerButton = document.querySelector(".mdl-layout__drawer-button");
@@ -158,9 +157,9 @@ const PageHeader = (props) => {
     })
     .then(response => response.json())
     .then(data => {
-      //if(props.global_consoleDebug){
+      if(props.global_consoleDebug){
         console.log('Header: readPost(): Success: data:', data);
-      //}
+      }
       let _posts = [];
       if(data['posts'].length > 0){
         for (var i = 0; i < data['posts'].length; i++) {
@@ -519,8 +518,6 @@ const PageHeader = (props) => {
   const addTodo = () => {
     const todos = posts;
     if (inputValue.trim() !== "") {
-      const inputValue = inputValue;
-      const contentValue = contentValue;
       const slug = createSlug(inputValue);
       const content = capitalizeFirstLetter(contentValue);
       const createdAt = format(new Date(), "yyyy-mm-dd hh:mm:ss");
@@ -678,7 +675,7 @@ const PageHeader = (props) => {
     <div className="spinner-container-outer">
       <div className="spinner-container-fetch">
         <div className="spinner-container-inner">
-          <Spinner singleColor />
+          <Spinner ref={ref1} singleColor />
         </div>
       </div>
     </div>
