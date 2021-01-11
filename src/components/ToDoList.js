@@ -12,6 +12,8 @@ import EnableProfanityFilter from "./EnableProfanityFilter";
 
 const ToDoList = (props) => {
   const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
   const height = props.global_height;
   const redirect = false;
   const postCount = props.postCount;
@@ -498,7 +500,7 @@ const ToDoList = (props) => {
     //console.log("ToDoList: constructor(): _todos: ", _todos);
   }
   if(!_todos){
-    _todos = (<div className="spinner-container"><div className="spinner-container-inner"><Spinner ref={ref1} singleColor /></div></div>)
+    _todos = (<div ref={ref1} className="spinner-container"><div ref={ref2} className="spinner-container-inner"><Spinner ref={ref3} singleColor /></div></div>)
   }
   const mdltextfieldStyle = {
     marginBottom: "0px"

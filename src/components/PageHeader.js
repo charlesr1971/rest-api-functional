@@ -10,6 +10,9 @@ import SnackBar from "./SnackBar";
 
 const PageHeader = (props) => {
   const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
   const [posts, setPosts] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [contentValue, setContentValue] = useState("");
@@ -573,10 +576,10 @@ const PageHeader = (props) => {
     )
     :
     (
-    <div className="spinner-container-outer">
-      <div className="spinner-container-fetch">
-        <div className="spinner-container-inner">
-          <Spinner ref={ref1} singleColor />
+    <div ref={ref1} className="spinner-container-outer">
+      <div ref={ref2} className="spinner-container-fetch">
+        <div ref={ref3} className="spinner-container-inner">
+          <Spinner ref={ref4} singleColor />
         </div>
       </div>
     </div>

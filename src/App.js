@@ -1,12 +1,10 @@
 import React from 'react';
 import { createBrowserHistory } from 'history';
 import { BrowserRouter as Router} from "react-router-dom";
-//import React, { useState } from "react";
 
 import PageHeader from "./components/PageHeader";
 
 import './App.css';
-
 
 export const history = createBrowserHistory({
   basename: process.env.PUBLIC_URL
