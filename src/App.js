@@ -12,16 +12,16 @@ export const history = createBrowserHistory({
 
 const App = (props) => {
   const _global_remote = "community";
-  const insecure = document.domain === "localhost" ? "http://localhost:8500/react/react-router-es6/assets/cfm/rest/api/v1/index.cfm" : ( _global_remote === "playground" ? "http://playground.application.me.uk/react-router-es6/assets/cfm/rest/api/v1/index.cfm" : "cfm/rest/api/v1/index.cfm");
-  const secure = document.domain === "localhost" ? "http://localhost:8500/react/react-router-es6/assets/cfm/rest/api/v1/index.cfm" : "https://community.establishmindfulness.com/assets-react_es6_restapi/cfm/rest/api/v1/index.cfm";
-  if(global_consoleDebug){
-    console.log("App: constructor(): insecure: ", insecure," secure: ",secure);
-  }
+  const endpointInsecure = document.domain === "localhost" ? "http://localhost:8500/react/react-router-es6/assets/cfm/rest/api/v1/index.cfm" : ( _global_remote === "playground" ? "http://playground.application.me.uk/react-router-es6/assets/cfm/rest/api/v1/index.cfm" : "cfm/rest/api/v1/index.cfm");
+  const endpointSecure = document.domain === "localhost" ? "http://localhost:8500/react/react-router-es6/assets/cfm/rest/api/v1/index.cfm" : "https://community.establishmindfulness.com/assets-react_es6_restapi/cfm/rest/api/v1/index.cfm";
   const global_height = 55;
   const global_consoleDebug = false;
   const global_enableProfanityFilter = 0;
-  const global_restapiEndpointInsecure = insecure;
-  const global_restapiEndpointSecure = secure;
+  const global_restapiEndpointInsecure = endpointInsecure;
+  const global_restapiEndpointSecure = endpointSecure;
+  if(global_consoleDebug){
+    console.log("App: constructor(): endpointInsecure: ", endpointInsecure," endpointSecure: ",endpointSecure);
+  }
   if(global_consoleDebug){
     console.log("App: constructor(): props: ", props);
   }
