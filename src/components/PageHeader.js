@@ -13,9 +13,6 @@ const PageHeader = (props) => {
   const [posts, setPosts] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [contentValue, setContentValue] = useState("");
-  const [movementMatrix, setMovementMatrix] = useState([]);
-  const [reorderClicked, setReorderClicked] = useState(false);
-  const [slug, setSlug] = useState("");
   const [redirect, setRedirect] = useState(false);
   const [postCount, setPostCount] = useState(0);
   const [postCountPrev, setPostCountPrev] = useState(0);
@@ -23,7 +20,6 @@ const PageHeader = (props) => {
   const [pages, setPages] = useState(0);
   const [page, setPage] = useState(1);
   const [dataFetched, setDataFetched] = useState(false);
-  const [origin, setOrigin] = useState("");
   const [restapiEndpoint, setRestapiEndpoint] = useState(props.global_restapiEndpointSecure);
   const [restapiEndpointType, setRestapiEndpointType] = useState("secure");
   const [maxpostpage, setMaxpostpage] = useState(1);
@@ -42,54 +38,8 @@ const PageHeader = (props) => {
   }
   useEffect(() => {
     readPost(page,"","",sortmethod,sortby,postbatch,"");
-  }, []);
-  /* useEffect(() => {
-    const mdlLayoutDrawerButton = document.querySelector(".mdl-layout__drawer-button");
-    if(mdlLayoutDrawerButton){
-      if(props.global_consoleDebug){
-        console.log("Header: componentDidUpdate(): mdlLayoutDrawerButton exists");
-      }
-    }
-    else{
-      if(props.global_consoleDebug){
-        console.log("Header: componentDidUpdate(): mdlLayoutDrawerButton does not exist");
-      }
-      const mdlJsLayout = document.querySelectorAll(".mdl-js-layout");
-      window.componentHandler.downgradeElements(mdlJsLayout);
-      try{
-        window.componentHandler.register({
-          constructor: window.MaterialLayout,
-          classAsString: 'MaterialLayout',
-          cssClass: 'mdl-js-layout'
-        });
-      }
-      catch(e){
-      }
-    }
-  }); */
-  /* useEffect(() => {
-    setPostCountPrev(postCount);
-  }); */
-  // CRUD
-  // Pages: READ
-  const readPages = () => {
-    const url = restapiEndpoint + "/posts/1";
-    fetch(url,{
-      method: 'GET'
-    })
-    .then(response => response.json())
-    .then(data => {
-      if(props.global_consoleDebug){
-        console.log('Header: readPages(): Success: data:', data);
-      }
-      if(data['posts'].length > 0){
-        setPages(data['pages']);
-      }
-    })
-    .catch((error) => {
-      console.error('Header: readPages(): Error: data:', error);
-    });
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
   // CRUD
   // Post: CREATE
   const createPost = (title,content) => {
@@ -127,8 +77,6 @@ const PageHeader = (props) => {
     })
     .catch((error) => {
       error.text().then( errorMessage => {
-        //const error = JSON.parse(errorMessage);
-        //const errorText = error['ERROR'];
         const errorText = "An error occurred on the server. Please try again later...";
         const data = {};
         data['method'] = "POST";
@@ -279,7 +227,6 @@ const PageHeader = (props) => {
     .catch((error) => {
       error.text().then( errorMessage => {
         const error = JSON.parse(errorMessage);
-        //const errorText = error['ERROR'];
         const errorText = "An error occurred on the server. Please try again later...";
         const data = {};
         data['method'] = "DELETE";
@@ -288,7 +235,7 @@ const PageHeader = (props) => {
         data['error'] = errorText;
         const json = JSON.stringify(data,null,2);
         if(props.global_consoleDebug){
-          console.log('Header: deletePost(): error:', data['error']);
+          console.log('Header: deletePost(): error:', data['error'],' error: ',error);
         }
         readPost(page,"delete-post",json,sortmethod,sortby,postbatch,data['error']);
       });
@@ -446,52 +393,6 @@ const PageHeader = (props) => {
       });
     }
   }
-  const createSnackBar = (message,type) => {
-    const id = "snackbar-message";
-    let snackbarContainer = document.getElementById(id);
-    if(props.global_consoleDebug){
-      console.log("Header: createSnackBar(): snackbarContainer: ",snackbarContainer);
-    }
-    if(!snackbarContainer){
-      const div1 = document.createElement("div");
-      div1.setAttribute("id",id);
-      div1.classList.add("mdl-js-snackbar","mdl-snackbar");
-      const div2 = document.createElement("div");
-      div2.classList.add("mdl-snackbar__text");
-      const button = document.createElement("button");
-      button.classList.add("mdl-snackbar__action");
-      div1.appendChild(div2);
-      div1.appendChild(button);
-      document.body.appendChild(div1);
-      window.componentHandler.upgradeDom();
-      snackbarContainer = document.getElementById(id);
-    }
-    if(snackbarContainer){
-      setTimeout(function(){
-        if(snackbarContainer){
-          var data = {
-            message:message,
-            timeout:5000,
-            actionHandler:function(event){
-              snackbarContainer.classList.remove("mdl-snackbar--active")
-            },
-            actionText:'Close'
-          };
-          try{
-            if(props.global_consoleDebug){
-              console.log("Header: createSnackBar(): snackbarContainer.MaterialSnackbar: ",snackbarContainer.MaterialSnackbar);
-            }
-            snackbarContainer.MaterialSnackbar.showSnackbar(data);
-          }
-          catch(e){
-          }
-        }
-      },1000);
-    }
-  }
-  const randomIntInc = (low, high) => {
-    return Math.floor(Math.random() * (high - low + 1) + low);
-  }
   const titleFormat = (string) => {
     const words = string.split(" ");
     for (let i = 0; i < words.length; i++) {
@@ -504,7 +405,7 @@ const PageHeader = (props) => {
   }
   const createSlug = (slug,id) => {
     let value = "";
-    const punctuationPattern = /[.,\/#!$%\^&\*;:{}=\-_`~()]/gim;
+    const punctuationPattern = /[.,/#!$%^&*;:{}=\-_`~()]/gim;
     value = slug.replace(punctuationPattern, "");
     value = value.trim();
     value = value.replace(/[\s]+/gim, "-");
@@ -539,7 +440,7 @@ const PageHeader = (props) => {
   }
   const handleSelectChange = (page,origin,json,sortmethod,sortby,event) => {
     if(props.global_consoleDebug){
-      console.log('Header: handleSelectChange():  page: ',page,' origin: ',origin,' json: ',json,' sortmethod: ',sortmethod,' sortby: ',sortby,' postbatch: ',event.target.value);
+      console.log('Header: handleSelectChange():  page: ',page,' origin: ',origin,' json: ',json,' sortmethod: ',sortmethod,' sortby: ',sortby,' postbatch: ',event.target.value," addToDo: ",addToDo);
     }
     readPost(page,origin,json,sortmethod,sortby,event.target.value,"");
   }
@@ -565,7 +466,7 @@ const PageHeader = (props) => {
   }
   const removeTodo = (index,origin,postid) => {
     if(props.global_consoleDebug){
-      console.log("Header: removeTodo(): index: ",index," origin: ",origin," postid: ",postid);
+      console.log("Header: removeTodo(): index: ",index," origin: ",origin," postid: ",postid," redirect: ",redirect);
     }
     posts.splice(index, 1);
     setPosts(posts);
@@ -609,7 +510,7 @@ const PageHeader = (props) => {
   );
   //dataFetched = false;
   const headerLink = (<Link to="/"><i className="fa fa-home home"></i></Link>);
-  const headerA = (<a className="bitbucket-link" href="https://bitbucket.org/charlesrobertson/react-router-es6/src/master/" target="_blank"><i className="fa fa-github"></i></a>);
+  const headerA = (<a className="bitbucket-link" href="https://bitbucket.org/charlesrobertson/react-router-es6/src/master/" target="_blank" rel="noreferrer"><i className="fa fa-github"></i></a>);
   const headerSpan = (<span className="mdl-layout-title">Postman REST API</span>);
   return (
   dataFetched === true ? (

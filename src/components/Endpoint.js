@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { RadioGroup, Radio } from 'react-mdl';
 
 const Endpoint = (props) => {
@@ -7,20 +7,7 @@ const Endpoint = (props) => {
   }
   useEffect(() => {
     window.componentHandler.upgradeDom();
-    setTimeout(function(){
-      //addClassToRadioSecureInsecure();
-    },1000);
-  },[]);
-  const addClassToRadioSecureInsecure = () => {
-    const radioSecureInsecure = props.restapiEndpointType === "secure" ?  document.getElementById("radio-secure").parentElement : document.getElementById("radio-insecure").parentElement;
-    if(props.global_consoleDebug){
-      console.log("Endpoint: addClassToRadioSecureInsecure(): radioSecureInsecure: ",radioSecureInsecure);
-    }
-    if(radioSecureInsecure){
-      radioSecureInsecure.classList.add("is-checked");
-      window.componentHandler.upgradeDom();
-    }
-  }
+  });
   const restapiEndpointType = props.restapiEndpointType;
   if(props.global_consoleDebug){
     console.log("Endpoint: render(): restapiEndpointType: ",restapiEndpointType);

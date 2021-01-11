@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Checkbox } from 'react-mdl';
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ToDo = (props) => {
   const height = props.global_height;
-  const [top, setTop] = useState(height);
+  const top = height;
   if(props.global_consoleDebug){
     console.log("ToDo: constructor(): props: ", props);
   }

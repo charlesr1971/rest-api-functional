@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { RadioGroup, Radio } from 'react-mdl';
 
 const EnableProfanityFilter = (props) => {
@@ -10,7 +10,7 @@ const EnableProfanityFilter = (props) => {
     setTimeout(function(){
       addClassToRadioYesNo();
     },1000);
-  },[]);
+  });
   const addClassToRadioYesNo = () => {
     const labelRadioYesNo = props.enableprofanityfilter === 1 ?  document.getElementById("radio-yes").parentElement : document.getElementById("radio-no").parentElement;
     if(props.global_consoleDebug){

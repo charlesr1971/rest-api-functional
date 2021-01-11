@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Textfield, Button, Spinner, Card, CardText, CardTitle, CardActions, CardMenu, IconButton  } from 'react-mdl';
+import { Textfield, Spinner, Card, CardText, CardTitle, CardActions, CardMenu, IconButton  } from 'react-mdl';
+// eslint-disable-next-line
 import { CSSPlugin, TweenMax, Elastic } from "gsap";
-import { BrowserRouter as Router, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import ToDo from "./ToDo";
 import Post from "./Post";
@@ -12,20 +13,13 @@ import EnableProfanityFilter from "./EnableProfanityFilter";
 const ToDoList = (props) => {
   const ref1 = useRef(null);
   const height = props.global_height;
-  //const todos = props.posts;
+  const redirect = false;
+  const postCount = props.postCount;
+  const pages = props.pages;
+  const enableProfanityFilter = props.global_enableProfanityFilter;
   const [todos, setTodos] = useState(props.posts);
-  const [inputValue, setInputValue] = useState(props.inputValue);
-  const [contentValue, setContentValue] = useState("");
   const [movementMatrix, setMovementMatrix] = useState([]);
   const [reorderClicked, setReorderClicked] = useState(false);
-  const [slug, setSlug] = useState("");
-  const [redirect, setRedirect] = useState(false);
-  const [postCount, setPostCount] = useState(props.postCount);
-  const [postCountPrev, setPostCountPrev] = useState(props.postCountPrev);
-  const [addToDo, setAddToDo] = useState(false);
-  const [pages, setPages] = useState(props.pages);
-  const [page, setPage] = useState(props.page);
-  const [enableProfanityFilter, setEnableProfanityFilter] = useState(props.global_enableProfanityFilter);
   if(props.global_consoleDebug){
     console.log("ToDoList: constructor(): props: ", props);
   }
@@ -33,44 +27,49 @@ const ToDoList = (props) => {
     if(props.global_consoleDebug){
       console.log("ToDoList: useEffect(): props.posts: ", props.posts);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
   useEffect(() => {
     if (reorderClicked) {
-      movementMatrix.map((child, index) => {
-      const domNode = document.getElementById("callout-" + child["index"]);
-      // START CREDITS
-      // Author: Joshua Comeau
-      // Link: https://medium.com/developers-writing/animating-the-unanimatable-1346a5aab3cd
-      /* 
+      const _movementMatrix = movementMatrix.map((child) => {
+        const domNode = document.getElementById("callout-" + child["index"]);
+        // START CREDITS
+        // Author: Joshua Comeau
+        // Link: https://medium.com/developers-writing/animating-the-unanimatable-1346a5aab3cd
+        /* 
+            
+          Notes: 
           
-        Notes: 
-        
-        This is where the magic happens that allows us to reorder a list based on its array index. 
-        Ingenious solution, using requestAnimationFrame(). 
-        This type of animation cannot be achieved by using 'react-spring' or CSSTransition
-        
-      */
-      if (domNode) {
-        requestAnimationFrame(() => {
-          domNode.style.transform = `translateY(${child.top}px)`;
-          domNode.style.transition = "transform 0s";
+          This is where the magic happens that allows us to reorder a list based on its array index. 
+          Ingenious solution, using requestAnimationFrame(). 
+          This type of animation cannot be achieved by using 'react-spring' or CSSTransition
+          
+        */
+        if (domNode) {
           requestAnimationFrame(() => {
-            domNode.style.transform = "";
-            domNode.style.transition =
-            "transform 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55)";
-            setReorderClicked(false);
+            domNode.style.transform = `translateY(${child.top}px)`;
+            domNode.style.transition = "transform 0s";
+            requestAnimationFrame(() => {
+              domNode.style.transform = "";
+              domNode.style.transition =
+              "transform 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55)";
+              setReorderClicked(false);
+            });
           });
-        });
-      }
-      // END CREDITS
+        }
+        // END CREDITS
+        return true;
       });
+      if(props.global_consoleDebug){
+        console.log("ToDoList: useEffect() 1: _movementMatrix: ",_movementMatrix);
+      }
     }
   });
   useEffect(() => {
     window.componentHandler.upgradeDom();
     window.componentHandler.upgradeAllRegistered();
     if(props.global_consoleDebug){
-      console.log("ToDoList: componentDidMount()...");
+      console.log("ToDoList: useEffect() 2");
     }
     setTimeout(function(){
       if(props.postCount !== props.postCountPrev){
@@ -127,14 +126,18 @@ const ToDoList = (props) => {
       let obj = {};
       movementMatrix = [];
       const temp = _todos.map(
-      function (todo, index) {
-        obj = {};
-        obj["index"] = index;
-        obj["indexNew"] = index - 1;
-        obj["top"] = -y;
-        movementMatrix.push(obj);
-      }
+        function (todo, index) {
+          obj = {};
+          obj["index"] = index;
+          obj["indexNew"] = index - 1;
+          obj["top"] = -y;
+          movementMatrix.push(obj);
+          return true;
+        }
       );
+      if(props.global_consoleDebug){
+        console.log("ToDoList: createMovementMatrix(): temp 1: ",temp);
+      }
       obj = {};
       obj["index"] = 0;
       obj["indexNew"] = _todos.length - 1;
@@ -146,14 +149,18 @@ const ToDoList = (props) => {
       let obj = {};
       movementMatrix = [];
       const temp = _todos.map(
-      function (todo, index) {
-        obj = {};
-        obj["index"] = index;
-        obj["indexNew"] = index + 1;
-        obj["top"] = y;
-        movementMatrix.push(obj);
-      }
+        function (todo, index) {
+          obj = {};
+          obj["index"] = index;
+          obj["indexNew"] = index + 1;
+          obj["top"] = y;
+          movementMatrix.push(obj);
+          return true;
+        }
       );
+      if(props.global_consoleDebug){
+        console.log("ToDoList: createMovementMatrix(): temp 2: ",temp);
+      }
       obj = {};
       obj["index"] = _todos.length - 1;
       obj["indexNew"] = 0;
@@ -166,14 +173,18 @@ const ToDoList = (props) => {
       let obj = {};
       movementMatrix = [];
       const temp = _todos.map(
-      function (todo, index) {
-        obj = {};
-        obj["index"] = index;
-        obj["indexNew"] = index;
-        obj["top"] = 0;
-        movementMatrix.push(obj);
-      }
+        function (todo, index) {
+          obj = {};
+          obj["index"] = index;
+          obj["indexNew"] = index;
+          obj["top"] = 0;
+          movementMatrix.push(obj);
+          return true;
+        }
       );
+      if(props.global_consoleDebug){
+        console.log("ToDoList: createMovementMatrix(): temp 3: ",temp);
+      }
       obj = {};
       obj["index"] = index1;
       obj["indexNew"] = direction === "up" ? index1 - 1 : index1 + 1;
@@ -185,13 +196,13 @@ const ToDoList = (props) => {
       obj["top"] = direction === "up" ? y : -y;
       movementMatrix[index2] = obj;
     }
-    if(props.global_consoleDebug){
-      console.log("ToDoList: movementMatrix(): ", movementMatrix);
-    }
     setMovementMatrix(movementMatrix);
   }
   const reorder = (allMoveUp, allMoveDown, index1, index2, direction) => {
     const y = height;
+    if(props.global_consoleDebug){
+      console.log("ToDoList: reorder(): y: ",y);
+    }
     let _todos = todos;
     /* 
         
@@ -277,6 +288,9 @@ const ToDoList = (props) => {
       index_2 = index1 === todos.length - 1 ? 1 : index1;
       allMoveDown = index1 === todos.length - 1 ? true : false;
     }
+    if(props.global_consoleDebug){
+      console.log("ToDoList: move(): todosLength: ", todosLength," index_1: ",index_1," top1: ",top1," direction2: ",direction2," index_2: ",index_2," top2: ",top2);
+    }
     createMovementMatrix(
       allMoveUp,
       allMoveDown,
@@ -285,6 +299,12 @@ const ToDoList = (props) => {
       direction
     );
     reorder(allMoveUp, allMoveDown, index1, index2, direction);
+  }
+  const sortPostbatchselectArray = (array,sortBy) => {
+    const result = array.sort( (a,b) => {
+      return sortBy === "asc" ? a-b : b-a;
+    });
+    return result;
   }
   if(props.global_consoleDebug){
     console.log('ToDoList: render(): props.postCount:', props.postCount,' props.postCountPrev: ',props.postCountPrev);
@@ -301,6 +321,7 @@ const ToDoList = (props) => {
   }
   let pagination = _pages.map(
     function (page, index) {
+      const key = parseInt(index + 1);
       return (
         <Pagination 
           ordinal={page} 
@@ -313,11 +334,12 @@ const ToDoList = (props) => {
           global_enableProfanityFilter={props.global_enableProfanityFilter} 
           global_restapiEndpointInsecure={props.global_restapiEndpointInsecure} 
           global_restapiEndpointSecure={props.global_restapiEndpointSecure} 
-          key={index}
+          key={key}
         />
       );
     }.bind(this)
   );
+  const prevKey = 0;
   let prev = _pages.map(
     function (page, index) {
       const defaultStyle = props.page === 1 ? {cursor: "default", color: "rgba(0,0,0,0.05)"} : {cursor: "pointer", color: "rgba(0,0,0,0.5)"};
@@ -328,7 +350,7 @@ const ToDoList = (props) => {
       return (
         page === 1 ? 
         (
-        <i className="fa fa-caret-left" style={defaultStyle} {...opts}></i>
+        <i className="fa fa-caret-left" style={defaultStyle} key={prevKey} {...opts}></i>
         )
         :
         (
@@ -337,6 +359,7 @@ const ToDoList = (props) => {
       );
     }.bind(this)
   );
+  const nextKey = parseInt(_pages.length + 1);
   let next = _pages.map(
     function (page, index) {
       const defaultStyle = props.page === props.pages ? {cursor: "default", color: "rgba(0,0,0,0.05)"} : {cursor: "pointer", color: "rgba(0,0,0,0.5)"};
@@ -347,7 +370,7 @@ const ToDoList = (props) => {
       return (
         page === props.maxpostpage ? 
         (
-        <i className="fa fa-caret-right" style={defaultStyle} {...opts}></i>
+        <i className="fa fa-caret-right" style={defaultStyle} key={nextKey} {...opts}></i>
         )
         :
         (
@@ -397,13 +420,19 @@ const ToDoList = (props) => {
   let resetSortmethodSortbyOptsClassName = {};
   resetSortmethodSortbyOptsClassName['className'] = "fa fa-power-off";
   let resetSortmethodSortbyOpts = {};
-  resetSortmethodSortbyOpts['onClick'] = props.readPost.bind(this,1,props.origin,"","Submission_date","DESC",4,"");
+  resetSortmethodSortbyOpts['onClick'] = props.readPost.bind(this,1,props.origin,"","Submission_date","DESC",props.request_postbatch,"");
   const resetSortmethodSortby = (<i {...resetSortmethodSortbyOptsClassName} {...resetSortmethodSortbyOpts}></i>);
   const resetSortmethodSortbyColumnTitle = (<div className="column-title">{resetSortmethodSortby}</div>);
-  let postbatch_select = props.postbatch_select.map(
+  let _postbatch_select = props.postbatch_select;
+  const foundPostbatch = _postbatch_select.find(element => element === props.request_postbatch);
+  if(!foundPostbatch){
+    _postbatch_select.push(props.request_postbatch);
+    _postbatch_select = sortPostbatchselectArray(_postbatch_select,"desc");
+  }
+  let postbatch_select = _postbatch_select.map(
     function (records, index) {
       return (
-        <option value={records}>{records}</option>
+        <option value={records} key={index}>{records}</option>
       );
     }
   );
@@ -535,6 +564,7 @@ const ToDoList = (props) => {
             rows={6} 
             />
           </div>
+          {/* eslint-disable-next-line */}
           <a className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onClick={props.addTodo.bind(this)}>
             Add Post
           </a>

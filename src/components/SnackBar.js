@@ -17,6 +17,7 @@ const SnackBar = (props) => {
         console.log("SnackBar: componentDidMount(): isSnackbarActive: ",isSnackbarActive," snackbarTimeout: ",snackbarTimeout," snackbarMessage: ",snackbarMessage);
       }
     },1000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
   const handleTimeoutSnackbar = () => {
     setIsSnackbarActive(false);

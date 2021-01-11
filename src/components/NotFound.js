@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Redirect} from "react-router-dom";
+import React, { useEffect } from 'react';
+import { Redirect} from "react-router-dom";
 
 const NotFound = (props) => {
   if(props.global_consoleDebug){
@@ -7,7 +7,7 @@ const NotFound = (props) => {
   }
   useEffect(() => {
     window.componentHandler.upgradeDom();
-  },[]);
+  });
   return (
     <Redirect to="/" />
   )
